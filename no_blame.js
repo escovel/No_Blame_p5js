@@ -644,12 +644,35 @@ function castHexagrams(poemNum) {
             var aLineValue = thisPoemsLineValues[randNum2];
             if ((isEven(aLineValue) == true)) oneCastingValue = 3;
             else if ((isEven(aLineValue) == false)) oneCastingValue = 2;
-          } else {
+          } else if (k == 1) {
             // Introduce a 'wild card' element this time with a random line value from the poem
             var randNum16 = (int(random(16)));
             var aLineValue = thisPoemsLineValues[randNum16];
             if ((isEven(aLineValue) == true)) oneCastingValue = 3;
             else if ((isEven(aLineValue) == false)) oneCastingValue = 2;
+          } else if (k == 2) {
+            // I have programmed the third coin toss to function as the modified coin in the "modified coin toss" casting method.
+            // if the castingSum does not equal 4 (meaning both first tosses were tails), do another normal toss the normal code above
+            if (castingSum !== 4) {
+              var randNum16 = (int(random(16)));
+              var aLineValue = thisPoemsLineValues[randNum16];
+              if ((isEven(aLineValue) == true)) oneCastingValue = 3;
+              else if ((isEven(aLineValue) == false)) oneCastingValue = 2;
+            } else {                                                // else, the first two tosses were tails, and I will reflip the third coin if it is either heads or tails
+              var randNum16 = (int(random(16)));
+              var aLineValue = thisPoemsLineValues[randNum16];
+              if ((isEven(aLineValue) == true)) {   // Coin was heads (even), so reflip
+                var randNum16 = (int(random(16)));
+                var aLineValue = thisPoemsLineValues[randNum16];
+                if ((isEven(aLineValue) == true)) oneCastingValue = 3;  // If toss is still even, or "heads," then add 3 as usual (to make 7 in all)
+                else if ((isEven(aLineValue) == false)) oneCastingValue = 5;  // If toss this time is odd, or "tails," then add 4 so the final result is a 9
+              } else if ((isEven(aLineValue) == false)) {  //  Coin was tails (odd), so reflip
+                var randNum16 = (int(random(16)));
+                var aLineValue = thisPoemsLineValues[randNum16];
+                if ((isEven(aLineValue) == true)) oneCastingValue = 4;  // If toss this time is even, then add 4 so the final result is 8
+                else if ((isEven(aLineValue) == false)) oneCastingValue = 2;  // If toss is still odd, then add 2 as usual (to make 6 in all)
+              }
+            }
           }
           castingSum += oneCastingValue;
         }
