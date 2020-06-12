@@ -139,6 +139,7 @@ function preload() {
   // myFontItal = loadFont('fonts/AverItalic.ttf')
   // myFontBold = loadFont('fonts/AverBold.ttf')
   myFontBoldItalic = loadFont('fonts/AverBoldItalic.ttf')
+  // Add preload calls for all art image files
 }
 
 //                                                        MAIN PROGRAM LOOP
@@ -172,10 +173,12 @@ function setup() {
   isSetComplete64Hexagrams();
   assembleAllPoemSetsArray();
   assembleBookByCastHexagrams();
+  // NOTE:  These methods may not all need to be called in setup() once the cover page and other front matter pages are added.  They can be in draw() only.
   drawPoemHexagram();
   drawPoemPage();
   textAlign(LEFT);
   text(drawPoemPageCounter+1, 748+pageXShift, 1000);
+  // drawTextArt();  // Art function under construction.  Probably only needs to be in draw().
   noLoop();
 }
 
@@ -191,6 +194,7 @@ function draw(){
   textFont(myFont);
   textAlign(LEFT);
   text(drawPoemPageCounter+1, 748+pageXShift, 1000);
+  // drawTextArt();
 }
 
 var borderXInit = 75;
@@ -286,7 +290,35 @@ function drawPoemHexagram(){
   }
 }
 
-//                                       STANZA PATTERNS                                          
+/*
+  Wireframe for drawTextArt() and related art integration functions:
+  1. Populate an array with the hexagram assignments for art pages.  Search for assembledbookarray indices with blank strings "  ".
+  2. Create function to identify bottom and top trigrams for the art hexagrams.
+  3. Create a function that will draw the correct art on the correct page.  Will likely be a procedure in the DrawPoemPage() function, or be called from it.
+  4. Create a switch function that triggers the 8 lines patterns / objects for bottom and top trigrams.
+  
+  Wireframe for related saveBookToPDF() function:
+  1. Use either saveCanvas() or the PHP method employed by wasdswag on this forum page:
+     https://forum.processing.org/two/discussion/10913/saving-the-p5-js-canvas-as-an-image-on-my-server
+  2. Create a PDF from the book page images.  NOTE:  Art images are already scaled up.  What about the rest of the book/pages?
+     Can those be eaisly scaled up as well for this process?
+  3. [OPTIONAL] Place a watermark on the cover page of the PDF with the "printing" number of the book.  This data can be stored on a JSON.
+  4. Make sure that image files are wiped from server once PDF is created from the images.
+  5. Serve user with PDF file to download.  Store a secondary copy to the server as well [OPTIONAL - Why did I want this?].
+
+*/
+
+/*
+function drawTextArt() {
+  textSize(16);
+  textFont(myFont);
+  textAlign(LEFT);
+  text("\[ In Development: This page will display generative art. \]", 175, 275)
+}
+*/
+
+
+///                                       STANZA PATTERNS                                          
 
 function makeStanzaPatternSlotArrays() {
 // Initialize pattern slots of 16 randomized lists of 0-15
@@ -833,6 +865,27 @@ var unique64HexagramTags = [
   'abcdef'  // 2
 ];
 
+// This array will be used to identify which trigrams make up the hexagrams for an assigned art piece.  
+// I can also count how many letters are in a hexagram and use that as a variable (for spacing between lines, perhaps)
+var trigramTags = [
+  '123', // The Creative / Heaven [BOTTOM]
+  '456', // The Creative / Heaven [TOP]
+  'a23', // The Gentle / Wind [BOTTOM]
+  'd56', // The Gentle / Wind [TOP]
+  '1b3', // The Clinging / Fire [BOTTOM]
+  '4e6', // The Clinging / Fire [TOP]
+  '12c', // The Joyous / Lake [BOTTOM]
+  '45f', // The Joyous / Lake [TOP]
+  'ab3', // Keeping Still / Mountain [BOTTOM]
+  'de6', // Keeping Still / Mountain [TOP]
+  '1bc', // The Arousing / Thunder [BOTTOM]
+  '4ef', // The Arousing / Thunder [TOP]
+  'a2c', // The Abysmal / Water [BOTTOM]
+  'd5f', // The Abysmal / Water [TOP]
+  'abc', // The Receptive / Earth [BOTTOM]
+  'def' // The Receptive / Earth [TOP]
+];
+
 // The first array contains the order of the hexagrams as laid out in the the Wilhelm/Baines I Ching.
 // The second array contains all of the names and titles of the hexagrams,
 // listed in the same order as the array above so they can easily be
@@ -922,7 +975,7 @@ For Tyler's final, desired version, I need to reorder the poems in the array to 
 
 var allPoemSets = [];
 
-var linguisticListReplacementStatement = ["\[ In Development: This page will display generative art. \]", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "]
+var linguisticListReplacementStatement = ["  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "]
 
 function assembleAllPoemSetsArray() {
 
