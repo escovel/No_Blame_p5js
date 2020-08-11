@@ -240,6 +240,30 @@ function constrainPageNumbers() {
   }  
 }
 
+// This functions as a simple switch to trigger either drawing art on a page or drawing a poem
+// The real useful code is in drawArtPage() and drawPoemPage()
+function drawBookPage(){
+  // Because the poem set arrays have "empty" text strings for the art pages, this should easily identify those pages
+  if (assembleAllPoemSetsArray[drawPoemPageCounter][0] == "  ") {
+    drawArtPage()
+  } else {
+    drawPoemPage()
+  }
+}
+
+// The issue here is now how to connect the art page to the correct hexagram
+function drawArtPage(){
+  textSize(20);
+  textFont(myFontBoldItalic);
+
+  textAlign(CENTER);
+  // First, print the poem title / hexagram title from the assembledBookArray
+  text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 225);
+  // Next, I will print the art image for the current page number.  NOTE:  I need to figure out the starting position.  And the correct index value in lineArtArray.  I have 3 set for now (fourth index).
+  // I have set the x and y positions for the image (the top-left corner position) based on where the first line of the poem drew in drawPoemPage().  Adjust as needed.
+  image(lineArtArray[drawPoemPageCounter][3], 175, 275;
+}
+
 function drawPoemPage(){
   textSize(20);
   textFont(myFontBoldItalic);
@@ -975,6 +999,7 @@ For Tyler's final, desired version, I need to reorder the poems in the array to 
 
 var allPoemSets = [];
 
+// 
 var linguisticListReplacementStatement = ["  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "]
 
 function assembleAllPoemSetsArray() {
@@ -1047,6 +1072,47 @@ function assembleBookByCastHexagrams() {
     // Clear anAssembledBookArrayPage for the next page in the loop
     anAssembledBookArrayPage = [];
   }
+}
+
+// Array will contain data for the 16 line art pages:  [0] index values for art pages, [1] hexagram tag, [2] bottom trigram, [3] top trigram, [4] generated artwork
+var lineArtPagesArray = new Array()  
+
+// Simple array with just the index values of art pages (for the art/poem switch function)
+var lineArtPageNumbers = new Array()
+
+// Assembles an array containing needed data concerning the line art, along with the generated art itself
+function createLineArtArray() {
+  let aLineArtPage = []
+  let lineArtPageIndexValue
+
+  // Check all indices of anAssembledBookArrayPage[] and transfer index values for those for which the first index of the poem is blank ("  ") to aLineArtPage[]\
+  for (i=0; i<64; i++) {
+     let thisIndexContent = assembledBookArray[i][2][0]  // Check on this.  Should be the first value of the blank "poem" placeholder array.
+     let thisIndexHexagramTag = assembledBookArray[i][0]
+     if (thisIndexContent == "  ") {
+       aLineArtPage.push(i)
+       aLineArtPage.push(thisIndexHexagramTag)
+       // Push the partially complete page arrays to the full array
+       lineArtPagesArray.push(aLineArtPage)
+       // Now to add just the index number for the poem/art page switcher function
+       lineArtPageNumbers.push(i)
+     }
+     // Clear temp array for the next page
+     aLineArtPage = []
+  }
+
+  for (i=0; i<16; i++) {
+    let thisArtHexTagChunks = []
+    let thisArtHexTag = lineArtPagesArray[i][1]
+    // Modified from StackOverflow.  Uses match and a regex to break strings into chunks of three characters then save all chuncks to an array.
+    thisArtHexTagChunks = thisArtHexTag.match(/.{1,3}/g);
+    let bottomTrigramTag = thisArtHexTag[0]
+    let topTrigramTag = thisArtHexTag[1]
+    aLineArtPage.push(bottomTrigramTag)
+    aLineArtPage.push(topTrigramTag)
+  }
+
+  // Final step will be to connect to the art generation code.  This will be stored in index[4] of lineArtPagesArray[].
 }
 
 // DEPRECATED CODE 
