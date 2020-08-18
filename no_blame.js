@@ -173,9 +173,10 @@ function setup() {
   isSetComplete64Hexagrams();
   assembleAllPoemSetsArray();
   assembleBookByCastHexagrams();
+  createLineArtArray();
   // NOTE:  These methods may not all need to be called in setup() once the cover page and other front matter pages are added.  They can be in draw() only.
   drawPoemHexagram();
-  drawPoemPage();
+  drawBookPage();
   textAlign(LEFT);
   text(drawPoemPageCounter+1, 748+pageXShift, 1000);
   // drawTextArt();  // Art function under construction.  Probably only needs to be in draw().
@@ -188,13 +189,12 @@ function draw(){
   background(255);
   drawPageBorder();
   drawPageNavDividers();
-  drawPoemPage();
+  drawBookPage();
   drawPoemHexagram();
   textSize(16);
   textFont(myFont);
   textAlign(LEFT);
   text(drawPoemPageCounter+1, 748+pageXShift, 1000);
-  // drawTextArt();
 }
 
 var borderXInit = 75;
@@ -244,7 +244,7 @@ function constrainPageNumbers() {
 // The real useful code is in drawArtPage() and drawPoemPage()
 function drawBookPage(){
   // Because the poem set arrays have "empty" text strings for the art pages, this should easily identify those pages
-  if (assembleAllPoemSetsArray[drawPoemPageCounter][0] == "  ") {
+  if (lineArtPageNumbers.indexOf(drawPoemPageCounter) > -1) {
     drawArtPage()
   } else {
     drawPoemPage()
@@ -259,9 +259,44 @@ function drawArtPage(){
   textAlign(CENTER);
   // First, print the poem title / hexagram title from the assembledBookArray
   text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 225);
+
+  // Test text version of art pages.  This will test that I have the correct trigrams connected to the pages too.
+  textSize(36);
+  textFont(myFont);
+  textAlign(CENTER);
+  // First, I must translate the current "book" page to the current lineArtPagesArray index
+  let thisLineArtPagesArrayIndex
+  for (i = 0; i < 16; i++) {
+    let currentArray = lineArtPagesArray[i]
+    if (currentArray.indexOf(drawPoemPageCounter) > -1) {
+      thisLineArtPagesArrayIndex = i
+      break
+    } else {
+      continue
+    } 
+  }
+  // Draw the top trigram name
+  let thisTopTrigramTag = lineArtPagesArray[thisLineArtPagesArrayIndex][3]
+  // console.log(thisTopTrigramTag)
+  let thisTopTrigramTagIndexValue = trigramTags.indexOf(thisTopTrigramTag)
+  let thisTopTrigramName = trigramTagNames[thisTopTrigramTagIndexValue]
+  text(thisTopTrigramName, 500, 375)
+  // Draw a divider line 
+  stroke(0);
+  line(325, 450, 675, 450);
+  noStroke();
+  // Draw the top trigram name
+  let thisBottomTrigramTag = lineArtPagesArray[thisLineArtPagesArrayIndex][2]
+  // console.log(thisBottomTrigramTag)
+  let thisBottomTrigramTagIndexValue = trigramTags.indexOf(thisBottomTrigramTag)
+  let thisBottomTrigramName = trigramTagNames[thisBottomTrigramTagIndexValue]
+  text(thisBottomTrigramName, 500, 525)
+  thisTopTrigramName = []
+  thisBottomTrigramName = []
+
   // Next, I will print the art image for the current page number.  NOTE:  I need to figure out the starting position.  And the correct index value in lineArtArray.  I have 3 set for now (fourth index).
   // I have set the x and y positions for the image (the top-left corner position) based on where the first line of the poem drew in drawPoemPage().  Adjust as needed.
-  image(lineArtArray[drawPoemPageCounter][3], 175, 275;
+  //image(lineArtArray[drawPoemPageCounter][3], 175, 275;
 }
 
 function drawPoemPage(){
@@ -796,13 +831,14 @@ function isSetComplete64Hexagrams() {
   for (i=0; i<64; i++) {
     // Check if each generated hexagram tag is in the unique64HexagramTags list.
     // Send all results to a comparison list.
-    if($.inArray(unique64HexagramTags[i], hexagramTags) > -1) { // FLAG - need to check on this one. Might be a problem.
+    if($.inArray(unique64HexagramTags[i], hexagramTags) > -1) {
       hexComparisonList.push('true');
     } else {
       hexComparisonList.push('false');
       }
   }
-  if ($.inArray('false', hexComparisonList) > -1) { // FLAG - I\'m seeing hasValue() a lot. Replaced with jQuery call $inArray()
+  // REMOVE THESE CONSOLE DEBUG LINES UPON FINAL CLEANUP
+  if ($.inArray('false', hexComparisonList) > -1) {
     // console.log('Oh no! The generated set of hexagrams IS NOT a complete set.');
   } else {
     // console.log('Hurray! The generated set of hexagrams IS a complete set.');
@@ -909,6 +945,26 @@ var trigramTags = [
   'abc', // The Receptive / Earth [BOTTOM]
   'def' // The Receptive / Earth [TOP]
 ];
+
+// This has duplicate values of each so that it will correspond 1:1 with trigramTags[].  This shouldn't be needed after testing is complete.
+var trigramTagNames = [
+  'Heaven (below)', 
+  'Heaven (above)', 
+  'Wind (below)', 
+  'Wind (above)', 
+  'Fire (below)', 
+  'Fire (above)', 
+  'Lake (below)', 
+  'Lake (above)', 
+  'Mountain (below)', 
+  'Mountain (above)', 
+  'Thunder (below)', 
+  'Thunder (above)', 
+  'Water (below)', 
+  'Water (above)', 
+  'Earth (below)', 
+  'Earth (above)' 
+]
 
 // The first array contains the order of the hexagrams as laid out in the the Wilhelm/Baines I Ching.
 // The second array contains all of the names and titles of the hexagrams,
@@ -1087,7 +1143,7 @@ function createLineArtArray() {
 
   // Check all indices of anAssembledBookArrayPage[] and transfer index values for those for which the first index of the poem is blank ("  ") to aLineArtPage[]\
   for (i=0; i<64; i++) {
-     let thisIndexContent = assembledBookArray[i][2][0]  // Check on this.  Should be the first value of the blank "poem" placeholder array.
+     let thisIndexContent = assembledBookArray[i][2][0]  // Check on this.  Should be the first value of the blank "poem" placeholder array.  YES CORRECT
      let thisIndexHexagramTag = assembledBookArray[i][0]
      if (thisIndexContent == "  ") {
        aLineArtPage.push(i)
@@ -1101,18 +1157,29 @@ function createLineArtArray() {
      aLineArtPage = []
   }
 
+
   for (i=0; i<16; i++) {
     let thisArtHexTagChunks = []
     let thisArtHexTag = lineArtPagesArray[i][1]
+    // console.log('thisArtHexTag = ' + thisArtHexTag)
     // Modified from StackOverflow.  Uses match and a regex to break strings into chunks of three characters then save all chuncks to an array.
-    thisArtHexTagChunks = thisArtHexTag.match(/.{1,3}/g);
-    let bottomTrigramTag = thisArtHexTag[0]
-    let topTrigramTag = thisArtHexTag[1]
-    aLineArtPage.push(bottomTrigramTag)
-    aLineArtPage.push(topTrigramTag)
+    thisArtHexTagChunks = thisArtHexTag.match(/.{1,3}/g)
+    // console.log('thisArtHexTagChunks = ')
+    // console.log(thisArtHexTagChunks)
+    let thisBottomTrigramTag = thisArtHexTagChunks[0]
+    // console.log('thisBottomTrigramTag = ') 
+    // console.log(thisBottomTrigramTag)
+    let thisTopTrigramTag = thisArtHexTagChunks[1]
+    // console.log('thisTopTrigramTag = ') 
+    // console.log(thisTopTrigramTag)
+    append(lineArtPagesArray[i], thisBottomTrigramTag)
+    append(lineArtPagesArray[i], thisTopTrigramTag)
   }
-
+  // console.log('lineArtPagesArray = ')
+  // console.log(lineArtPagesArray)
   // Final step will be to connect to the art generation code.  This will be stored in index[4] of lineArtPagesArray[].
+  // For Testing, I will just have it print text to the screen instead of the art.  No code needed here for that.
+
 }
 
 // DEPRECATED CODE 
