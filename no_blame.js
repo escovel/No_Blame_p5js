@@ -122,7 +122,7 @@ var linguisticPoemsShuffled = [];
 var lineHasBeenUsed;
 var aLine;
 // This counter will be used by the draw function for keeping track of which poem page is to be drawn
-var drawPoemPageCounter = 0;
+var drawPoemPageCounter = 0; // Note: The counter runs from 0-63, corresponding to pages 1-64. I only add 1 when drawing the page number to the screen. This helps with working with arrays whose indices align with specific pages.
 
 // Initialize next and previous page buttons
 var nextPageButton;
@@ -176,10 +176,14 @@ function setup() {
   createLineArtArray();
   // NOTE:  These methods may not all need to be called in setup() once the cover page and other front matter pages are added.  They can be in draw() only.
   drawPoemHexagram();
+  angleMode(DEGREES)
+  // rectMode(CENTER)  // Note: This can probably be removed. Test after relevant lines are transferred to the main-program setup().
+  lineArtDrawingBuffer = createGraphics(650, 650)
+  lineArtAssemblyBuffer = createGraphics(650, 650)
+  makeLineArtBookSetArray()
   drawBookPage();
   textAlign(LEFT);
   text(drawPoemPageCounter+1, 748+pageXShift, 1000);
-  // drawTextArt();  // Art function under construction.  Probably only needs to be in draw().
   noLoop();
 }
 
@@ -243,7 +247,7 @@ function constrainPageNumbers() {
 // This functions as a simple switch to trigger either drawing art on a page or drawing a poem
 // The real useful code is in drawArtPage() and drawPoemPage()
 function drawBookPage(){
-  // Because the poem set arrays have "empty" text strings for the art pages, this should easily identify those pages
+  // This if statement checks if the current page counter number (page number -1) should have art (i.e., has no poem assigned to it).
   if (lineArtPageNumbers.indexOf(drawPoemPageCounter) > -1) {
     drawArtPage()
   } else {
@@ -251,12 +255,13 @@ function drawBookPage(){
   }
 }
 
-// The issue here is now how to connect the art page to the correct hexagram
+// Draws everything needed for the art pages. Connects to the code in line_art.js via the lineArtPagesArray
 function drawArtPage(){
   textSize(20);
   textFont(myFontBoldItalic);
 
   textAlign(CENTER);
+
   // First, print the poem title / hexagram title from the assembledBookArray
   text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 225);
 
@@ -264,7 +269,9 @@ function drawArtPage(){
   textSize(36);
   textFont(myFont);
   textAlign(CENTER);
+
   // First, I must translate the current "book" page to the current lineArtPagesArray index
+  // NOTE: thisLineArtPagesArrayIndex correspond with the playlistCounter variable in my test drawArt code
   let thisLineArtPagesArrayIndex
   for (i = 0; i < 16; i++) {
     let currentArray = lineArtPagesArray[i]
@@ -275,28 +282,25 @@ function drawArtPage(){
       continue
     } 
   }
-  // Draw the top trigram name
-  let thisTopTrigramTag = lineArtPagesArray[thisLineArtPagesArrayIndex][3]
-  // console.log(thisTopTrigramTag)
-  let thisTopTrigramTagIndexValue = trigramTags.indexOf(thisTopTrigramTag)
-  let thisTopTrigramName = trigramTagNames[thisTopTrigramTagIndexValue]
-  text(thisTopTrigramName, 500, 375)
-  // Draw a divider line 
-  stroke(0);
-  line(325, 450, 675, 450);
-  noStroke();
-  // Draw the top trigram name
-  let thisBottomTrigramTag = lineArtPagesArray[thisLineArtPagesArrayIndex][2]
-  // console.log(thisBottomTrigramTag)
-  let thisBottomTrigramTagIndexValue = trigramTags.indexOf(thisBottomTrigramTag)
-  let thisBottomTrigramName = trigramTagNames[thisBottomTrigramTagIndexValue]
-  text(thisBottomTrigramName, 500, 525)
-  thisTopTrigramName = []
-  thisBottomTrigramName = []
 
-  // Next, I will print the art image for the current page number.  NOTE:  I need to figure out the starting position.  And the correct index value in lineArtArray.  I have 3 set for now (fourth index).
-  // I have set the x and y positions for the image (the top-left corner position) based on where the first line of the poem drew in drawPoemPage().  Adjust as needed.
-  //image(lineArtArray[drawPoemPageCounter][3], 175, 275;
+  // Next, I will print the art image for the current page.
+  // Identify the current bottom trigram of this page's hexagram
+  let thisBottomTrigram = lineArtPagesArray[thisLineArtPagesArrayIndex][2]
+
+  // These bottom trigrams will be rotated 90 degrees to be vertical
+  verticalConditionsArray = ['123', 'a23', 'a2c', '1b3']
+
+  // console.log(verticalConditionsArray.includes(bottomTrigram))
+
+  if (verticalConditionsArray.includes(thisBottomTrigram)) {  // If true, then the image will be rotated 90 degrees
+  push()
+    translate(1100, 0)
+    rotate(90)
+    image(lineArtBookSetArray[thisLineArtPagesArrayIndex], 245, 275) // Adjust these values as needed. The translation value will likely have to work in combination with these values.
+    pop()
+  } else { // If not, then it will be drawn as usual (without rotation)
+    image(lineArtBookSetArray[thisLineArtPagesArrayIndex], 175, 245)
+  }
 }
 
 function drawPoemPage(){
@@ -308,9 +312,9 @@ function drawPoemPage(){
   text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 225);
   // Next, I will print the poem for the current page number
   var poemXPosition = 175;
-  var poemYStart = 275;
-  var poemLineSpace = 25;
-  var nextStanzaSpace = 100;
+  var poemYStart = 310;
+  var poemLineSpace = 30;
+  var nextStanzaSpace = 118;
   for (i=0;i<4;i++) {
     for (j=0;j<4;j++) {
       textSize(16);
@@ -350,7 +354,7 @@ function drawPoemHexagram(){
 }
 
 /*
-  Wireframe for drawTextArt() and related art integration functions:
+  Wireframe for drawArt() and related art integration functions:
   1. Populate an array with the hexagram assignments for art pages.  Search for assembledbookarray indices with blank strings "  ".
   2. Create function to identify bottom and top trigrams for the art hexagrams.
   3. Create a function that will draw the correct art on the correct page.  Will likely be a procedure in the DrawPoemPage() function, or be called from it.
@@ -368,7 +372,7 @@ function drawPoemHexagram(){
 */
 
 /*
-function drawTextArt() {
+function drawArt() {
   textSize(16);
   textFont(myFont);
   textAlign(LEFT);
@@ -1130,7 +1134,8 @@ function assembleBookByCastHexagrams() {
   }
 }
 
-// Array will contain data for the 16 line art pages:  [0] index values for art pages, [1] hexagram tag, [2] bottom trigram, [3] top trigram, [4] generated artwork
+// 2D Array will contain data for the 16 line art pages.  Each 2nd level index will contain this sub-array:  [0] index values in assembledBookArray for art pages, [1] hexagram tag, [2] bottom trigram, [3] top trigram.
+// The generated art work will be stored in a different array; code is located in the line_art.js file.
 var lineArtPagesArray = new Array()  
 
 // Simple array with just the index values of art pages (for the art/poem switch function)
@@ -1157,7 +1162,7 @@ function createLineArtArray() {
      aLineArtPage = []
   }
 
-
+  // Split the hextag into two 3-character bits then store each as bottom and top trigram in indices [2] and [3] of 
   for (i=0; i<16; i++) {
     let thisArtHexTagChunks = []
     let thisArtHexTag = lineArtPagesArray[i][1]
@@ -1175,10 +1180,8 @@ function createLineArtArray() {
     append(lineArtPagesArray[i], thisBottomTrigramTag)
     append(lineArtPagesArray[i], thisTopTrigramTag)
   }
-  // console.log('lineArtPagesArray = ')
-  // console.log(lineArtPagesArray)
-  // Final step will be to connect to the art generation code.  This will be stored in index[4] of lineArtPagesArray[].
-  // For Testing, I will just have it print text to the screen instead of the art.  No code needed here for that.
+  console.log('lineArtPagesArray = ')
+  console.log(lineArtPagesArray)
 
 }
 
