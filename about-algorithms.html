@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>No Blame - The Algorithms</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+  <body>
+    <div id="header">
+      <h1 class="alignleft"><a href="index.html" style="color:black;">NO BLAME</a></h1>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="intro-holder">
+      <h2 style="color:black;"><strong>About the Algorithms Used in <em>No Blame</em></strong></h2>
+      <p>The algorithms used in <em>No Blame</em> are not especially sophisticated, although they are a little complicated to explain. First, it is important to know that there are two major algorithms at work here: a shuffling algorithm that shuffles the original poems’ lines, followed by a casting algorithm that casts an <em>I Ching</em> hexagram for each of the 64 poems / art works that make up the final book. Essentially, the output of the poem shuffling algorithm provides the material for the casting of the <em>I Ching</em>, which determines how the poems and art will be titled and placed into the final sequence. The following list explains what is done, step by step, to shuffle the original 16 poems, how the casting algorithm is applied, and what the link is between the two.</p>
+      <ol>
+      <li>First, there are two versions of the poem set that are pre-coded into the program: the original poems, and a version reorganized by linguistic category (the "linguistic lists"). Note that the linguistic lists themselves do not appear in the final work, but are used only to generate an alternative shuffled version that does.</li>
+      <li>A complete set of "stanza patterns" is generated in such a way that 16 sets of non-repeating numbers between 1 and 16 are created, and each number (1-16) appears exactly 4 times across the 16 sets. This is important; since these numbers represent which line numbers from the 16-line poems to "grab" during the shuffling process, it is necessary that every line gets used once and only once in creating the new, shuffled poem set.</li>
+      <li>Next, the shuffled poems are created by applying each of the stanza patterns 4 times (per poem) in order to create the new set of 16-line poems. When a stanza pattern is applied, it grabs one of the lines from the 16 original or linguistic list poems that has the corresponding line value. This line is then removed from consideration during the rest of the shuffling process so that is not used again.</li>
+      <li>The original poem set and the newly created shuffled original poem and shuffled linguistic list sets are now stored along with the line values for each line. Note that the line values for the "linguist lists" are stored as well in order to be used in the following first step of the casting algorithm; the results for this, however, will be applied to the generation of the 16 art works instead of to any of the poems.</li>
+      <li>The saved line values are now used as the "coin tosses" for the modified coin-toss method used in the algorithm that casts <em>I Ching</em> hexagrams for each poem, establishing a connection between the poems and the casting of the <em>I Ching</em>. The casting algorithm queries whether a randomly selected line from the poem being cast is even or odd; if even, this is counted as a "heads," and if odd, as "tails." Three such "coin tosses" are made in order to determine if the current hexagram line is "broken" or "solid," and this process is repeated until six hexagram lines have been cast from the bottom up and a complete hexagram is determined for the poem/artwork. (Note: Please consult information elsewhere on the details of using the coin toss method to cast the <em>I Ching</em>.)</li>
+      <li>Much like with the shuffling algorithm, the casting algorithm is applied one poem at a time through all of the sets in such a way to ensure that each <em>I Ching</em> hexagram is cast once and only once. Essentially, each time a hexagram is determined for a poem, the algorithm asks if that hexagram has already been cast; if so, the algorithm rejects the result and casts again until the result is a hexagram that has not yet been cast.</li>
+      <li>The title and number of each cast hexagram is now stored along with the poems and the art pages (and will be used to determine which artworks will be generated; see the page about the generative art for more information).</li>
+      <li>Finally, the entire set for the book is sorted into numerical order by hexagram, so that this generated instance of the <em>No Blame</em> book proceeds from hexagram 1 through 64 as numbered in the King Wen sequence.</li>
+      </ol>
+    </div>
+    <br>
+    <br>
+    <div class="footer">
+      <p><strong>Learn more about:</strong> <a href="about-authors.html">The Authors</a> | <a href="about-art.html">The Art</a> | <a href="about-algorithms.html">The Algorithms</a> | <a href="about-origins.html"><em>No Blame's</em> Origins</a> | <a href="acknowledgments.html">Acknowledgments</a> | <a href="index.html">Return to Front Page</a></p>
+      <br>
+      <hr>
+      <p style="font-size: 10pt; text-align: center;">This work is licensed to Tyler Carter and Eric Goddard-Scovel under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+    </div>
+  </body>
+</html>

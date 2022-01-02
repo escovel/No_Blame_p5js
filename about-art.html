@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>No Blame - The Art</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+  <body>
+    <div id="header">
+      <h1 class="alignleft"><a href="index.html" style="color:black;">NO BLAME</a></h1>
+      <div style="clear:both;"></div>
+    </div>
+    <div id="intro-holder">
+      <h2 style="color:black;"><strong>About the Generative Art</strong></h2>
+      <p>The generative art for <em>No Blame</em> was conceived of and created by Eric Goddard-Scovel using the <a href="https://p5js.org/" target="_blank">p5.js</a> creative coding javascript library. P5.js is a newer implementation of the generative art programming environment <a href="https://www.processing.org/" target="_blank">Processing</a> that was first developed by artist Casey Reas and Ben Fry. It is intended primarily to add very flexible generative and interactive art or other visual elements to websites and was therefore a perfect choice for adding generative artwork to this project.</p>
+      <p>The art is based conceptually on the eight trigrams of the <em>I Ching</em>. The associated elements of the trigrams, how these elements are understood within the various hexagrams, and other concepts and images associated with the trigrams were all taken into consideration when designing the generative art line patterns, so the results display a combination of representation (the images of nature elements) and abstraction (energies, attitudes, tones, etc.). Therefore, a basic understanding of how the 64 hexagrams of the <em>I Ching</em> are each composed of the eight trigrams is necessary for understanding how the code for the artwork is structured, as well as some familiarity with which elements and concepts are associated with each of the trigrams. This <a href="https://www.iching-online.com/iching-trigrams.htm" target="_blank"><em>I Ching</em></a> Online page on the trigrams is a good overview, but I consulted the <a href="https://www.goodreads.com/book/show/534289.The_I_Ching_or_Book_of_Changes" target="_blank">Wilhelm/Baynes translation</a> almost exclusively for this project.</p>
+      <p>In terms of the structure of the art, first, a general pattern/design was coded to (usually abstractly) correspond with the images and elements of each of the eight trigrams. These served as the bottom trigram variations (for when that trigram occupied the bottom position in the hexagram). Next, eight derivative functions were coded for the top variations of each trigram, making for 16 drawing functions in all. Enough variability was programmed into all of the functions (in darkness, transparency, starting positions, line thickness, angles, spacing, etc.) so that each time they are run they draw unique but identifiable versions of the trigram patterns. For each hexagram's generative art image, first the bottom trigram pattern is drawn in darker, more opaque, and often thicker lines, and then the top trigram is drawn and superimposed over that in lighter, thinner, and often more transparent lines. Additionally, each trigram pattern is drawn of vertical or horizontal lines themselves composed of hundreds or thousands of smaller lines.</p>
+      <p>As new visual symbols of the hexagrams, I did not seek for this art to replace or improve upon the stark, simple beauty (and logic) of the original system of six-line permutations of solid and broken lines. Instead, I felt that I might provide a more visual interpretation through using contemporary creative coding methods to combine the tones and energies of the two trigrams that make up each hexagram. The hope in the end was that, by representing the core aspects and energies of each trigram impressionistically in the generated patterns, I might see the more complex interpretations, images, and judgements of the hexagrams emerge from their combination. The variability of each generation of the artworks also adds the element of constant change and life to the artworks, as, just like the universe of the <em>I Ching</em>, nothing ever keeps still for long.</p>
+    </div>
+    <br>
+    <br>
+    <div class="footer">
+      <p><strong>Learn more about:</strong> <a href="about-authors.html">The Authors</a> | <a href="about-art.html">The Art</a> | <a href="about-algorithms.html">The Algorithms</a> | <a href="about-origins.html"><em>No Blame's</em> Origins</a> | <a href="acknowledgments.html">Acknowledgments</a> | <a href="index.html">Return to Front Page</a></p>
+      <br>
+      <hr>
+      <p style="font-size: 10pt; text-align: center;">This work is licensed to Tyler Carter and Eric Goddard-Scovel under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+    </div>
+  </body>
+</html>

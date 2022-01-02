@@ -3,28 +3,37 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>No Blame (demo version)</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet"> 
+  <title>No Blame</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
   <body>
     <div id="header">
-      <h1 class="alignleft"><a href="index.html" style="color:black;">NO BLAME</a></h1>
-      <div style="clear: both;"></div>
+      <h1 class="alignleft"><a href="index.html" style="color:black;" alt="Return to Front Page">NO BLAME</a></h1>
+      <div style="clear:both;"></div>
     </div>
     <div id="intro-holder">
-      <h2 style="color:black; font-size: 16pt"><strong>Introduction to <em>No Blame</em></strong></h2>
-      <p>This web application, programmed by Eric Goddard-Scovel using the p5.js framework, generates an “amorphous” digital book consisting of 64 pages, with 48 poems (3 16-poem sequences) and 16 works of generative art (still in development). All of the poems are derived from original poems written by Tyler Carter.</p>
-      <p>Additionally, the book’s 64 pages are titled and arranged by the 64 hexagrams of the ancient Chinese book of divination, the <em>I Ching</em> (or <em>Book of Changes</em>). As each poem or page of artwork is generated and/or placed into the preliminary sequence of the book, it is assigned a hexagram (or, an <em>I Ching</em> hexagram is "cast") via the modified three-coin method, or coin oracle.  The modified coin toss method was chosen to align the casting method more closely with the traditional "yarrow stalk" method (to read more on different casting methods, <a href="https://en.wikipedia.org/wiki/I_Ching_divination" target="_blank">this Wikipedia page</a> is a decent web source)which is a slighly modified method the traditional coin toss method of casting the . The <a href="https://divination.com/how-to-consult-the-i-ching/" target="_blank">"How to Consult the I Ching"</a> page at the Divination Foundation covers the basics of this method. For further study, we highly recommend (for English readers) the <a href="https://www.goodreads.com/book/show/534289.The_I_Ching_or_Book_of_Changes" target="_blank">Wilhelm/Baynes translation of the <em>I Ching</em></a>, <a href="https://www.goodreads.com/book/show/78341.Understanding_the_I_Ching" target="_blank"><em>Understanding the I Ching: The Wilhelm Lectures on the Book of Changes</em></a>, and Eliot Weinberger's article <a href="http://www.chinafile.com/library/nyrb-china-archive/what-i-ching" target="_blank">"What Is the I Ching?"</a></p>
-      <h2 style="color:black; font-size: 14pt;"><strong><em>Instructions</em></strong></h2>
-      <p><strong>Press the button below</strong> to generate, or “cast,” your unique version of <em>No Blame</em>. Then, use the navigation buttons on the right to move through the pages or to refresh and generate a new version of the book.</p>
+      <p><em>No Blame</em> is an amorphous digital book of poetry and art, with text by Tyler Carter and coding/artwork by Eric Goddard-Scovel. It consists of 64 pages, with 48 poems (i.e., 16 static original poems and 32 poems shuffled by algorithms partially derived from the casting of <em>I Ching</em> hexagrams) and 16 works of generative art.</p>
+      <p>We call it an "amorphous" digital book because it presents a unique outcome each time the program runs. Just as a hexagram of the <em>I Ching</em> is cast when the <em>I Ching</em> is used as a method of divination, the content of <em>No Blame</em> is cast with every generation so that the lines of 32 of its poems are shuffled into new arrangements, the 16 artworks are generated in new variations, and each poem and artwork is associated with a new hexagram. This casting is not simply random but is instead an outcome of the algorithms of the <em>I Ching</em> and an algorithm derived for this project.</p>
+      <br>
+      <p><strong>Press the button below</strong> to generate, or “cast,” <em>No Blame</em>, or visit the links at the bottom of the page to learn more about the project.</p>
       <br>
       <br>
-      <a href="main-program.html" class="button"><h2>Generate the Book</h2></a>
+      <br>
+      <a href="main-program.html" class="button"><h2 style="color:white;">Generate the Book</h2></a>
+      <br>
+      <br>
+      <br>
+      <p><strong>Instructions:</strong> After generating the book, use the navigation buttons on the right to move through the pages or refresh and generate a new version of the book. Please be patient while the book generates: it may anywhere from 5 to 30 seconds, depending on your computer.</p>
     </div>
-    <div id="footer">
+    <br>
+    <br>
+    <div class="footer">
+      <p><strong>Learn more about:</strong> <a href="about-authors.html">The Authors</a> | <a href="about-art.html">The Art</a> | <a href="about-algorithms.html">The Algorithms</a> | <a href="about-origins.html"><em>No Blame's</em> Origins</a> | <a href="acknowledgments.html">Acknowledgments</a> | <a href="index.html">Return to Front Page</a></p>
+      <br>
       <hr>
-      <h3>This work is licensed to Tyler Carter and Eric Goddard-Scovel under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</h3>
+      <p style="font-size: 10pt; text-align: center;">This work is licensed to Tyler Carter and Eric Goddard-Scovel under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
     </div>
   </body>
 </html>

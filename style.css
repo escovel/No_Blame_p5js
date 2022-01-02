@@ -4,7 +4,7 @@ html, body {
 }
 
 #header {
-  top: 0px;
+  top: 10px;
   left: 40px;
   position: fixed;
   background-color: white;
@@ -14,33 +14,32 @@ html, body {
 
 #sketch-holder {
   position: relative;
-  top: 20px;
+  top: 30px;
   bottom: 20px;
   margin: auto;
   width: 1000px;
-  height: 1100px;
-  padding: 8px;
+  height: 1130px;
+  padding: 40px;
 }
 
 #intro-holder {
   position: relative;
-  top: 20px;
-  bottom: 20px;
+  top: 10px;
+  bottom: 10px;
   margin: auto;
-  width: 750px;
+  width: 850px;
   height: 750px;
-  padding: 8px;
+  overflow: auto;
+  padding-bottom: 80px;
 }
 
-#footer {
-  top: 45px;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: relative;
+.footer {
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  left: 0;
   background-color: white;
-  width: 50%;
-  display: block;
+  width: 100%;
   padding-bottom: 10px;
 }
 
@@ -66,14 +65,28 @@ html, body {
 
 p {
   color: black;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 13pt;
-  line-height: 18pt;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 14pt;
+}
+
+pre {
+  color: black;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 14pt;
+}
+
+li {
+  color: black;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 14pt;
 }
 
 h1 {
   color: black;
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   font-size: 20pt;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -84,39 +97,38 @@ h1 {
 
 h2 { 
   color: white;
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   font-size: 14pt;
   letter-spacing: 1px;
 }
 
-h3 {
-  color: black;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 10pt;
-  text-align: center;
-}
-
+/* Was #2F4F4F */
 a:link { 
   text-decoration: none;
-  color: #2F4F4F; 
+  color: #568f8f; 
 }
 
+/* Was #909090 */
 a:visited {
   text-decoration: none;
-  color: #909090;
+  color: #346565;
 }
 
+/* Was #708090 */
 a:hover { 
   text-decoration: none;
-  color: #708090;
+  color: #5db1b1;
 }
 
+/* Was #D3D3D3 */
 a:active {
   text-decoration: none;
-  color: #D3D3D3;
+  color: #6adcdc;
 }
 
 hr {
-  border: 3px solid black;
-  max-width: 850px;
+  border: 0;
+  background-color: black;
+  height: 3px;
+  max-width: 900px;
 }
