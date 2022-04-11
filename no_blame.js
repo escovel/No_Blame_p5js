@@ -118,17 +118,30 @@ var borderHeight = 1099;
 
 function drawPageBorder(){
   stroke(180);
+  strokeWeight(1);
   line(borderXInit, 1, borderXInit+borderWidth, 1);
   line(borderXInit+borderWidth, 1, borderXInit+borderWidth, borderHeight);
   line(borderXInit, 1, borderXInit, borderHeight);
   line(borderXInit, borderHeight, borderXInit+borderWidth, borderHeight);
+  strokeWeight(0);
+  noStroke();
+}
+
+function drawTitleUnderline(){
+  stroke(40);
+  strokeCap(SQUARE);
+  strokeWeight(1);
+  line(450, 180, 550, 180);
+  strokeWeight(0);
   noStroke();
 }
 
 function drawPageNavDividers(){
   stroke(180);
+  strokeWeight(1);
   line(949, 510, 981, 510);
   line(949, 570, 981, 570);
+  strokeWeight(0);
   noStroke();
 }
 
@@ -175,6 +188,7 @@ function drawArtPage(){
 
   // First, print the poem title / hexagram title from the assembledBookArray
   text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 160);
+  drawTitleUnderline();
 
   // Test text version of art pages.  This will test that I have the correct trigrams connected to the pages too.
   textSize(36);
@@ -221,6 +235,8 @@ function drawPoemPage(){
   textAlign(CENTER);
   // First, print the poem title / hexagram title from the assembledBookArray
   text(assembledBookArray[drawPoemPageCounter][1], 425+pageXShift, 160);
+  drawTitleUnderline();
+
   // Next, I will print the poem for the current page number
   var poemXPosition = 175;
   var poemYStart = 280;
